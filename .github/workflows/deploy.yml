@@ -30,7 +30,7 @@ jobs:
         KEY: ${{ secrets.SSHKEY }}
         script: |
             cd txtcreatorapi
+            screen -X -S "txtcreatorapi" quit
             /home/ubuntu/.dotnet/dotnet build --configuration Release 
             cd bin/Release/net7.0
-            screen -X -S "txtcreatorapi" quit
             nohup screen -d -m -S txtcreatorapi sudo /home/ubuntu/.dotnet/dotnet TxtCreatorAPI.dll --urls http://*:80
