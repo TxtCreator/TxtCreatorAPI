@@ -1,0 +1,36 @@
+name: Deploy
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+
+    - name: Copy repository contents
+      uses: appleboy/scp-action@master
+      env:
+        HOST: ${{ secrets.HOST }}
+        USERNAME: ${{ secrets.USERNAME }}
+        PORT: ${{ secrets.PORT }}
+        KEY: ${{ secrets.SSHKEY }}
+      with:
+        source: "."
+        target: "/home/ubuntu/txtcreatorapi"
+
+    - name: Executing remote command
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        USERNAME: ${{ secrets.USERNAME }}
+        PORT: ${{ secrets.PORT }}
+        KEY: ${{ secrets.SSHKEY }}
+        script: |
+            cd txtcreatorapi
+            /home/ubuntu/.dotnet/dotnet build --configuration Release 
+            cd bin/Release/net7.0
+            screen -X -S "txtcreatorapi" quit
+            nohup screen -d -m -S txtcreatorapi sudo /home/ubuntu/.dotnet/dotnet TxtCreatorAPI.dll --urls http://*:80
