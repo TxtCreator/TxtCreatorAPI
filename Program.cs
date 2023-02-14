@@ -8,7 +8,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("UI", 
         new CorsPolicyBuilder()
-            .WithOrigins("https://txtcreator.pl")    
+            .WithOrigins("https://txtcreator.pl", "http://localhost:5173")    
             .AllowAnyHeader()
             .AllowAnyMethod()
             .AllowCredentials().Build());

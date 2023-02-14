@@ -17,6 +17,7 @@ public class TxtController : ControllerBase
     [HttpPost("download")]
     public IActionResult DownloadTxt([FromBody]TxtModel txtModel)
     {
+        Console.WriteLine();
         if (txtModel.Textures.Count == 0)
         {
              return NoContent();
@@ -31,6 +32,7 @@ public class TxtController : ControllerBase
             Console.WriteLine(exception.Message);
             return NoContent();
         }
+      
     }
     
     [HttpGet("categories/{version}")]
