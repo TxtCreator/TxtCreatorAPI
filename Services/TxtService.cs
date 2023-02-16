@@ -17,7 +17,7 @@ public class TxtService : ITxtService
     public FileContentResult GetTxt(TxtModel txtModel)
     {
         var txtDirectory = $"./{txtModel.Name}-{DateTime.Now.Ticks}-{Path.GetRandomFileName()}";
-        CloneDirectory($"{_environment.WebRootPath}/assets/txt", txtDirectory);
+        CloneDirectory($"{_environment.WebRootPath}/assets/txt{txtModel.Version}", txtDirectory);
         var textures = new Dictionary<FileInfo, string>();
         foreach (var texture in txtModel.Textures)
         {
