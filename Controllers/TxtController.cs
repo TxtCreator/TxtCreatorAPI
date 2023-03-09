@@ -39,4 +39,10 @@ public class TxtController : ControllerBase
     {
         return _txtService.GetCategories(version);
     }
+    
+    [HttpGet("versions")]
+    public ActionResult<List<string>> GetAllVersions()
+    {
+        return _txtService.GetVersions();
+    }
 }

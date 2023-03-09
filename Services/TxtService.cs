@@ -65,6 +65,13 @@ public class TxtService : ITxtService
         return categories;
     }
 
+    public List<string> GetVersions()
+    {
+        var versions = Directory.GetDirectories($"{_environment.WebRootPath}/assets").Select(directory => new DirectoryInfo(directory))
+            .Where(directory => !directory.Name.Contains("txt")).Select(directory => directory.Name).ToList();
+        return versions;
+    }
+
     private static List<SubCategoryModel> GetSubCategories(string directoryPath)
     {
         var subCategories = new List<SubCategoryModel>();
@@ -138,4 +145,5 @@ public interface ITxtService
 {
     FileContentResult GetTxt(TxtModel txtModel);
     List<CategoryModel> GetCategories(string version);
+    List<string> GetVersions();
 }
